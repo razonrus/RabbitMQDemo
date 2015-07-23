@@ -5,11 +5,11 @@ using RabbitMQ.Client.Events;
 
 namespace RabbitConsumer
 {
-    class Program
+    class Program3
     {
         private const string queueName = "myQueue";
 
-        static void Main()
+        static void Main1()
         {
             var connectionFactory = new ConnectionFactory
             {
@@ -28,8 +28,12 @@ namespace RabbitConsumer
                 {
                     var message = (BasicDeliverEventArgs)consumer.Queue.Dequeue();
                     var body = Encoding.UTF8.GetString(message.Body);
+                    
+                    //запуск нескольких консумеров
 
                     Console.WriteLine("Received message: " + body);
+                    
+                    chanell.BasicAck(message.DeliveryTag, false);
                 }
             }
         }
